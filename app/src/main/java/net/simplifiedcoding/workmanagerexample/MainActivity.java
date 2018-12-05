@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.work.Constraints;
 import androidx.work.Data;
 import androidx.work.OneTimeWorkRequest;
 import androidx.work.WorkInfo;
@@ -25,8 +26,13 @@ public class MainActivity extends AppCompatActivity {
                 .putString(KEY_TASK_DESC, "Hey I am sending the work data")
                 .build();
 
+        Constraints constraints = new Constraints.Builder()
+                .setRequiresCharging(true)
+                .build();
+
         final OneTimeWorkRequest request = new OneTimeWorkRequest.Builder(MyWorker.class)
                 .setInputData(data)
+                .setConstraints(constraints)
                 .build();
 
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
